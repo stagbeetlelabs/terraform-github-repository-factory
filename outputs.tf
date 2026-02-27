@@ -3,5 +3,5 @@ output "repo_owner" {
 }
 
 output "repo_name" {
-  value = local.repository.name
+  value = var.repo_name
 }
