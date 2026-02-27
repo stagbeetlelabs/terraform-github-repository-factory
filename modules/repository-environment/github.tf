@@ -17,7 +17,7 @@ resource "github_repository_environment" "environment" {
 resource "github_actions_environment_secret" "environment_secrets" {
   for_each        = var.environment_secrets
   repository      = var.repo_name
-  environment     = var.env_code
+  environment     = github_repository_environment.environment.environment
   secret_name     = each.key
   plaintext_value = each.value
 }
@@ -28,7 +28,7 @@ resource "github_actions_environment_secret" "environment_secrets" {
 resource "github_actions_environment_variable" "environment_variables" {
   for_each      = var.environment_variables
   repository    = var.repo_name
-  environment   = var.env_code
+  environment   = github_repository_environment.environment.environment
   variable_name = each.key
   value         = each.value
 }
