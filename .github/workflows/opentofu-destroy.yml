@@ -1,0 +1,44 @@
+name: "OpenTofu Destroy"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - common
+          - dev
+          - uat
+          - prod
+      debug:
+        description: "Enable Debugging"
+        required: false
+        type: choice
+        default: "false"
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: opentofu-${{ inputs.environment }}
+  cancel-in-progress: false
+
+run-name: "OpenTofu Destroy - ${{ inputs.environment }}"
+
+jobs:
+  tofu-destroy:
+    name: "Run Tofu Destroy"
+    uses: stagbeetlelabs/gc-iac/.github/workflows/opentofu.yml@main
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      command: "tofu apply -destroy -auto-approve"
+      module_path: "iac/environments/${{ inputs.environment }}"
+      debug: ${{ inputs.debug }}

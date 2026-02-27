@@ -1,0 +1,31 @@
+name: "Gcloud Command"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run command for"
+        required: true
+        type: string
+      command:
+        description: "Run a custom gcloud command"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: gcloud-${{ inputs.environment }}
+  cancel-in-progress: false
+ 
+jobs:
+  command:
+    name: "Run Gcloud Command"
+    uses: stagbeetlelabs/gc-iac/.github/workflows/gcloud-command.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+      command: ${{ inputs.command }}
+    secrets: inherit
+

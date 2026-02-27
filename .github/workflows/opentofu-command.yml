@@ -1,0 +1,40 @@
+name: "OpenTofu Command"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - common
+          - dev
+          - uat
+          - prod
+      command:
+        description: "Run a custom tofu command"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: opentofu-${{ inputs.environment }}
+  cancel-in-progress: false
+ 
+run-name: "OpenTofu Command - ${{ inputs.environment }}"
+
+jobs:
+  command:
+    name: "Run Tofu Command"
+    uses: stagbeetlelabs/gc-iac/.github/workflows/opentofu.yml@main
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      command: ${{ inputs.command }}
+      module_path: "iac/environments/${{ inputs.environment }}"
+

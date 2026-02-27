@@ -1,0 +1,34 @@
+name: "OpenTofu Module Delivery Tests"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to use for deploying tests"
+        required: true
+        type: string
+        default: "dev"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test:
+    name: "Run OpenTofu Module Tests"
+    # Using the same reusable workflow structure you had, though adapted for module testing
+    uses: stagbeetlelabs/gc-iac/.github/workflows/opentofu.yml@main
+    secrets: inherit
+    with:
+      # Use branch/PR defined env logic or fallback to manually dispatched target
+      environment: ${{ github.event.inputs.environment || 'dev' }}
+      # Run all .tftest.hcl in the module root via `test` directory
+      command: "tofu test"
+      module_path: "."
+      debug: false

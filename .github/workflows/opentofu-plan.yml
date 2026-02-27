@@ -1,0 +1,45 @@
+name: "OpenTofu Plan"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - common
+          - dev
+          - uat
+          - prod
+      debug:
+        description: "Enable Debugging"
+        required: false
+        type: choice
+        default: "false"
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: opentofu-${{ inputs.environment }}
+  cancel-in-progress: false
+ 
+run-name: "OpenTofu Plan - ${{ inputs.environment }}"
+
+jobs:
+  plan:
+    name: "Run Tofu Plan"
+    uses: stagbeetlelabs/gc-iac/.github/workflows/opentofu.yml@main
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      command: "tofu plan"
+      module_path: "iac/environments/${{ inputs.environment }}"
+      debug: ${{ inputs.debug }}
+

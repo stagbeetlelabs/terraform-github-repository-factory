@@ -1,0 +1,21 @@
+name: "Workload Identity Federation Test"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run WIF test for"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  plan:
+    name: "Run Workload Identity Federation Test"
+    uses: stagbeetlelabs/gc-iac/.github/workflows/workload-identity-federation-test.yml@main
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
