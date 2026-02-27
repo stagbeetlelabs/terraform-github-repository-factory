@@ -44,9 +44,9 @@ locals {
 }
 
 // Set branch protection rules
-resource "github_branch_protection_v3" "branch_protection" {
-  repository = local.repository.name
-  branch     = "main"
+resource "github_branch_protection" "branch_protection" {
+  repository_id = local.repository.id
+  pattern     = "main"
 }
 
 /*
