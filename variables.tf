@@ -1,27 +1,50 @@
-variable "project_id" {
-  description = "The ID of the project in which to provision resources."
+
+variable "repo_owner" {
+  description = "The repository owner or organisation"
   type        = string
 }
 
-variable "name" {
-  description = "The name of the bucket."
+variable "repo_name" {
+  description = "The repository name"
   type        = string
 }
 
-variable "location" {
-  description = "The default location for resources"
+variable "template_repo_owner" {
+  description = "The template repository owner or organisation"
   type        = string
-  default     = "EU"
+  default     = null
 }
 
-variable "storage_class" {
-  description = "The Storage Class of the new bucket."
+variable "template_repo_name" {
+  description = "The template repository name"
   type        = string
-  default     = "STANDARD"
+  default     = null
 }
 
-variable "force_destroy" {
-  description = "When deleting a bucket, this boolean option will delete all contained objects. If you try to delete a bucket that contains objects, Terraform will fail that run."
+variable "repo_description" {
+  description = "A description of what the repository contains"
+  type        = string
+}
+
+variable "create_repository" {
+  description = "Create the repository"
   type        = bool
   default     = false
+}
+
+variable "environments" {
+  description = "Landing Zone environments"
+  type        = map(any)
+}
+
+variable "variables" {
+  description = "Repository variables"
+  type        = map(string)
+  default     = {}
+}
+
+variable "secrets" {
+  description = "Repository secrets"
+  type        = map(string)
+  default     = {}
 }
