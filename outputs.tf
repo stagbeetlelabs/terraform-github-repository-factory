@@ -5,7 +5,3 @@ output "repo_owner" {
 output "repo_name" {
   value = local.repository.name
 }
-
-output "environments" {
-  value = var.environments
-}

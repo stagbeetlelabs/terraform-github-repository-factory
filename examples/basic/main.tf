@@ -1,9 +1,21 @@
-module "gcs" {
-  source = "../.."
+module "github_repository" {
+  source = "../../"
 
-  project_id    = var.project_id
-  name          = var.name
-  location      = var.location
-  storage_class = var.storage_class
-  force_destroy = true
+  repo_owner = "GITHUB_ORG"
+  repo_name  = "REPO_NAME"
+  template_repo = "GITHUB_ORG/REPO_NAME"
+  repo_description = "Description of new repository"
+  create_repository = true
+  variables = {}
+  secrets =   {}
+}
+
+module "github_repository_environment" {
+  source = "../../modules/repository_environment"
+
+  repo_owner = module.github_repository.name
+  repo_name  = module.github_repository.name
+  env_code   = var.env_code
+  environment_variables = var.environment_variables
+  environment_secrets = var.environment_secrets
 }

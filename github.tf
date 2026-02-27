@@ -1,6 +1,11 @@
 /*
  * GITHUB REPOSITORY
  */
+locals {
+  template_repo_owner = split("/", var.template_repo)[0]
+  template_repo_name  = split("/", var.template_repo)[1]
+}
+
 resource "github_repository" "repository" {
   count     = var.create_repository ? 1 : 0
   name        = var.repo_name
@@ -10,10 +15,10 @@ resource "github_repository" "repository" {
   is_template = true
 
   dynamic "template" {
-    for_each = var.template_repo_name != null && var.template_repo_name != "" && var.template_repo_owner != null && var.template_repo_owner != "" ? [1] : []
+    for_each = var.template_repo != null && var.template_repo != "" ? [1] : []
     content {
-      owner                = var.template_repo_owner
-      repository           = var.template_repo_name
+      owner                = local.template_repo_owner
+      repository           = local.template_repo_name
       include_all_branches = false
     }
   }

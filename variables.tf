@@ -9,16 +9,14 @@ variable "repo_name" {
   type        = string
 }
 
-variable "template_repo_owner" {
-  description = "The template repository owner or organisation"
+variable "template_repo" {
+  description = "The template repository in the format 'owner/repository-name'"
   type        = string
   default     = null
-}
-
-variable "template_repo_name" {
-  description = "The template repository name"
-  type        = string
-  default     = null
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$", var.template_repo))
+    error_message = "template_repo must be in the format 'owner/repository-name'"
+  }
 }
 
 variable "repo_description" {
@@ -30,11 +28,6 @@ variable "create_repository" {
   description = "Create the repository"
   type        = bool
   default     = false
-}
-
-variable "environments" {
-  description = "Landing Zone environments"
-  type        = map(any)
 }
 
 variable "variables" {
