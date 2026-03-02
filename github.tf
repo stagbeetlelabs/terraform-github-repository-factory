@@ -28,7 +28,7 @@ resource "github_repository" "repository" {
   }
 
   // Archive the repository when it is destroyed. A useful failsafe to prevent accidental deletion of repositories.
-  archive_on_destroy = var.archive_on_destroy
+  archive_on_destroy = false
 
   // Automatically delete branch on merge. This is a very important setting to simplify the AI agent's job.
   delete_branch_on_merge = true
