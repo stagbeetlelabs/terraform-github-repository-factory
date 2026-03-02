@@ -42,12 +42,6 @@ variable "secrets" {
   default     = {}
 }
 
-variable "prevent_destroy" {
-  description = "Prevent the repository from being destroyed"
-  type        = bool
-  default     = true
-}
-
 variable "archive_on_destroy" {
   description = "Archive the repository when it is destroyed"
   type        = bool

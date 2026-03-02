@@ -7,7 +7,7 @@ locals {
 }
 
 resource "github_repository" "repository" {
-  count     = var.create_repository ? 1 : 0
+  count       = var.create_repository ? 1 : 0
   name        = var.repo_name
   description = var.repo_description
 
@@ -24,7 +24,7 @@ resource "github_repository" "repository" {
   }
 
   lifecycle {
-    prevent_destroy = var.prevent_destroy
+    prevent_destroy = true
   }
 
   // Archive the repository when it is destroyed. A useful failsafe to prevent accidental deletion of repositories.
@@ -46,7 +46,7 @@ locals {
 // Set branch protection rules
 resource "github_branch_protection" "branch_protection" {
   repository_id = local.repository.id
-  pattern     = "main"
+  pattern       = "main"
 }
 
 /*
