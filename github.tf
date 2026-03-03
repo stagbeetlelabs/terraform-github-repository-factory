@@ -24,11 +24,12 @@ resource "github_repository" "repository" {
   }
 
   lifecycle {
+    // We need to allow the lifecycle of git repositories. Instead we enforce archiving of repositories.
     prevent_destroy = false
   }
 
   // Archive the repository when it is destroyed. A useful failsafe to prevent accidental deletion of repositories.
-  archive_on_destroy = var.archive_on_destroy
+  archive_on_destroy = true
 
   // Automatically delete branch on merge. This is a very important setting to simplify the AI agent's job.
   delete_branch_on_merge = true
