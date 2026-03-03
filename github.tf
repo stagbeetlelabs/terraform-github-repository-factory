@@ -24,7 +24,7 @@ resource "github_repository" "repository" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   // Archive the repository when it is destroyed. A useful failsafe to prevent accidental deletion of repositories.
