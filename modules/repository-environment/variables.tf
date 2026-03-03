@@ -9,8 +9,8 @@ variable "repo_name" {
   type        = string
 }
 
-variable "env_code" {
-  description = "Environment code"
+variable "env_name" {
+  description = "Environment name"
   type        = string
 }
 
