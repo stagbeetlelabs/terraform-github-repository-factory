@@ -2,7 +2,7 @@
  * GITHUB ENVIRONMENT
  */
 resource "github_repository_environment" "environment" {
-  environment = var.env_name
+  environment = var.env
   repository  = var.repo_name
 
   deployment_branch_policy {
