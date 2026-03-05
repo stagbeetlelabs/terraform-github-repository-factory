@@ -45,5 +45,5 @@ variable "secrets" {
 variable "archive_on_destroy" {
   description = "Archive the repository when it is destroyed"
   type        = bool
-  default     = true
+  default     = false
 }
