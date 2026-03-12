@@ -8,7 +8,7 @@ locals {
 
 resource "github_repository" "repository" {
   count       = var.create_repository ? 1 : 0
-  name        = "${var.repo_owner}/${var.repo_name}"
+  name        = "${var.repo_name}"
   description = var.repo_description
 
   visibility  = "private"
